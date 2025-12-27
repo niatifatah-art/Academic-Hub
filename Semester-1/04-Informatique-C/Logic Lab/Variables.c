@@ -1,117 +1,70 @@
-/*
- * Filename: variables_master_reference.c
- * Description: A complete, self-contained technical guide to C Variables.
- * Author: [Fatah Niati]
- * Date: 27/12/2025
- * * --- CONCEPTS COVERED ---
- * 1. Theoretical Definition & Memory Role.
- * 2. Naming Conventions & Reserved Keywords.
- * 3. Primitive Data Types & Format Specifiers.
- * 4. Declaration vs. Initialization (Garbage Values).
- * 5. Constants (Read-Only Storage).
- * 6. Memory Size Analysis (sizeof).
- * 7. Variable Scope (Local vs. Global).
- * 8. Security Focus: Integer Overflow.
- */
-
-#include <stdio.h>      // Standard Input/Output
-#include <stdbool.h>    // Support for boolean types
-#include <limits.h>     // Limits for integer types
-#include <float.h>      // Limits for floating-point types
-
-// --- GLOBAL SCOPE ---
-// Variables declared here are accessible globally.
-// They are stored in the 'Data Segment' and initialized to 0 by default.
-int global_counter = 100;
+#include <stdio.h>      // For printing
+#include <stdbool.h>    // For using true/false
 
 int main() {
+    
+    // ==========================================
+    // 1. DATA TYPES (The 4 Pillars)
+    // ==========================================
+    // These are the most used types in C.
+    
+    int age = 19;            // Integer: Whole numbers (%d)
+    float height = 1.80;    // Float: Decimal numbers (%f)
+    char grade = 'A';        // Char: Single character (%c)
+    bool isStudent = true;   // Bool: True (1) or False (0) (%d)
 
-    // =========================================================================
-    // 1. DEFINITION & SYNTAX
-    // =========================================================================
-    /* * A variable is a named location in RAM. 
-     * Syntax: DataType VariableName = Value;
+    printf("--- Section 1: Basic Types ---\n");
+    printf("Age: %d, Height: %.2f, Grade: %c, Student: %d\n\n", age, height, grade, isStudent);
+
+    // ==========================================
+    // 2. IMPORTANT RULES (Naming & Initialization)
+    // ==========================================
+    /*
+     * RULE 1: Names cannot start with numbers (e.g., 1name is WRONG).
+     * RULE 2: No spaces in names (e.g., user age is WRONG, use user_age).
+     * RULE 3: Initialization! If you don't give a variable a value, 
+     * it will contain "GARBAGE" (random old data from RAM).
      */
+    int clean_variable = 0; // Good Practice: Always start with 0 or a value.
 
-    // =========================================================================
-    // 2. NAMING CONVENTIONS (Rules)
-    // =========================================================================
-    /* * - Must start with a letter (a-z, A-Z) or underscore (_).
-     * - No digits at the beginning (e.g., '1var' is INVALID).
-     * - No spaces or special characters (@, $, #).
-     * - Case-sensitive: 'score' is not the same as 'Score'.
-     * - No Reserved Keywords: cannot use 'int', 'return', 'void', etc.
+    // ==========================================
+    // 3. MEMORY SIZE (How much space it takes?)
+    // ==========================================
+    /*
+     * Every variable takes "space" in your computer's memory (RAM).
+     * We use sizeof() to measure this space in Bytes.
      */
-    int student_age = 20; // Valid naming
-
-    // =========================================================================
-    // 3. PRIMITIVE DATA TYPES & FORMAT SPECIFIERS
-    // =========================================================================
-    /* * Each type occupies a specific size in memory and requires a format specifier.
-     */
-    int count = 10;                // Integer: Whole numbers (%d)
-    float price = 19.99f;          // Float: Single precision decimal (%f)
-    double distance = 1234.5678;   // Double: Double precision decimal (%lf)
-    char grade = 'A';              // Char: Single character (%c)
-    bool is_valid = true;          // Bool: True (1) or False (0) (%d)
-
-    printf("--- Section 3: Data Types ---\n");
-    printf("Int: %d | Float: %.2f | Double: %.4lf | Char: %c | Bool: %d\n\n", 
-            count, price, distance, grade, is_valid);
-
-    // =========================================================================
-    // 4. MEMORY SIZE (sizeof Operator)
-    // =========================================================================
-    /* * sizeof() returns the size in bytes. This is critical for memory management.
-     */
-    printf("--- Section 4: Memory Size (Bytes) ---\n");
-    printf("Size of int:    %zu bytes\n", sizeof(int));
-    printf("Size of float:  %zu bytes\n", sizeof(float));
-    printf("Size of double: %zu bytes\n", sizeof(double));
-    printf("Size of char:   %zu byte\n\n", sizeof(char));
+    printf("--- Section 3: Memory Size ---\n");
+    printf("An 'int' takes:   %zu bytes\n", sizeof(int));
+    printf("A 'char' takes:  %zu byte\n\n", sizeof(char));
 
     
 
-    // =========================================================================
-    // 5. CONSTANTS (Immutable Variables)
-    // =========================================================================
-    /* * Using 'const' prevents the variable value from being changed.
-     * Useful for fixed values like PI or tax rates.
+    // ==========================================
+    // 4. CONSTANTS (The "Read-Only" Variables)
+    // ==========================================
+    /*
+     * If you want a variable that NEVER changes (like your Birth Year),
+     * use the 'const' keyword.
      */
-    const float PI = 3.14159f;
-    // PI = 3.14; // This would cause a COMPILATION ERROR.
+    const int MY_BIRTH_YEAR = 2005;
+    // MY_BIRTH_YEAR = 2010; // This will cause an ERROR if you try it!
 
-    // =========================================================================
-    // 6. INITIALIZATION & REASSIGNMENT
-    // =========================================================================
-    /* * IMPORTANT: Variables declared without a value contain 'Garbage Values'.
-     * Always initialize variables to 0 or a known value for security.
-     */
-    int current_score;      // Declaration (Warning: Garbage Value)
-    current_score = 50;     // Initialization
-    current_score = 75;     // Reassignment (Old value 50 is overwritten)
+    printf("--- Section 4: Constants ---\n");
+    printf("Birth Year is fixed at: %d\n\n", MY_BIRTH_YEAR);
 
-    // =========================================================================
-    // 7. SECURITY FOCUS: INTEGER OVERFLOW
-    // =========================================================================
-    /* * Occurs when a value exceeds the maximum limit of its data type.
-     * This is a major source of software vulnerabilities.
+    // ==========================================
+    // 5. TYPE CONVERSION (Bonus Pro Tip)
+    // ==========================================
+    /*
+     * Sometimes you need to treat an 'int' as a 'float'.
      */
-    printf("--- Section 7: Integer Overflow ---\n");
-    int max_limit = INT_MAX; // Maximum value of a signed 32-bit int
-    printf("Max Limit: %d\n", max_limit);
+    int apples = 5;
+    int people = 2;
+    float result = (float)apples / people; // Result is 2.5, not 2.
     
-    int result = max_limit + 1; // Wraps around to negative (Undefined behavior)
-    printf("After Overflow: %d\n\n", result);
+    printf("--- Section 5: Math ---\n");
+    printf("5 divided by 2 is: %.1f\n", result);
 
-    // =========================================================================
-    // 8. SCOPE (Local vs. Global)
-    // =========================================================================
-    /* * - Global: Declared outside main(), lasts for the life of the program.
-     * - Local: Declared inside main() or {}, exists only within that block.
-     */
-    int local_value = 5; 
-    printf("Global: %d | Local: %d\n", global_counter, local_value);
-
-    return 0; // Successful execution
+    return 0; 
 }
